@@ -5,11 +5,13 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     GameObject player;
+    GameObject camera;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     void PlayerControls()
@@ -36,9 +38,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void PortalPlacement()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            print("blue portal");
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            print("red portal");
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
         PlayerControls();
+        PortalPlacement();
     }
 }
