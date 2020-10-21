@@ -5,13 +5,20 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     GameObject player;
-    GameObject camera;
+    
+    GameObject main_camera;
+
+    public float x_speed = 2.0f;
+    public float y_speed = 2.0f;
+
+    private float x = 0.0f;
+    private float y = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        camera = GameObject.FindGameObjectWithTag("MainCamera");
+        main_camera = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     void PlayerControls()
@@ -38,22 +45,19 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void PortalPlacement()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            print("blue portal");
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            print("red portal");
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
         PlayerControls();
-        PortalPlacement();
+    }
+
+    private void FixedUpdate()
+    {
+        x += x_speed * Input.GetAxis("Mouse X");
+        y -= y_speed * Input.GetAxis("Mouse Y");
+
+        // rotation for camera and player
+        main_camera.transform.eulerAngles = new Vector3(y, x, 0.0f);
+        player.transform.Rotate(0, Input.GetAxis("Mouse X") * x_speed, 0);
     }
 }
