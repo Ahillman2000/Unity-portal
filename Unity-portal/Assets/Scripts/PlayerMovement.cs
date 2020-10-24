@@ -8,11 +8,14 @@ public class PlayerMovement : MonoBehaviour
     
     GameObject main_camera;
 
-    public float x_speed = 2.0f;
-    public float y_speed = 2.0f;
+    public float mouse_x_speed = 2.0f;
+    public float mouse_y_speed = 2.0f;
 
-    private float x = 0.0f;
-    private float y = 0.0f;
+    private float mouse_x = 0.0f;
+    private float mouse_y = 0.0f;
+
+    private float player_x_velocity = 0.1f;
+    private float player_z_velocity = 0.1f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,22 +29,22 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey("w"))
         {
             //print("W");
-            player.transform.Translate(0, 0, 0.1f);
+            player.transform.Translate(0, 0, player_z_velocity);
         }
         if (Input.GetKey("a"))
         {
             //print("A");
-            player.transform.Translate(-0.1f, 0, 0);
+            player.transform.Translate(-player_x_velocity, 0, 0);
         }
         if (Input.GetKey("s"))
         {
             //print("S");
-            player.transform.Translate(0, 0, -0.1f);
+            player.transform.Translate(0, 0, -player_z_velocity);
         }
         if (Input.GetKey("d"))
         {
             //print("D");
-            player.transform.Translate(0.1f, 0, 0);
+            player.transform.Translate(player_x_velocity, 0, 0);
         }
     }
 
@@ -53,11 +56,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        x += x_speed * Input.GetAxis("Mouse X");
-        y -= y_speed * Input.GetAxis("Mouse Y");
+        mouse_x += mouse_x_speed * Input.GetAxis("Mouse X");
+        mouse_y -= mouse_y_speed * Input.GetAxis("Mouse Y");
 
         // rotation for camera and player
-        main_camera.transform.eulerAngles = new Vector3(y, x, 0.0f);
-        player.transform.Rotate(0, Input.GetAxis("Mouse X") * x_speed, 0);
+        main_camera.transform.eulerAngles = new Vector3(mouse_y, mouse_x, 0.0f);
+        player.transform.Rotate(0, Input.GetAxis("Mouse X") * mouse_x_speed, 0);
     }
 }
