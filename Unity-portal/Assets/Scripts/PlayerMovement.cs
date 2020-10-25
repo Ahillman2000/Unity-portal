@@ -5,14 +5,16 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     GameObject player;
+    GameObject playerBody;
     
     GameObject main_camera;
 
-    public float mouse_x_speed = 2.0f;
-    public float mouse_y_speed = 2.0f;
-
     private float mouse_x = 0.0f;
     private float mouse_y = 0.0f;
+
+    private float mouse_x_rotation = 0;
+
+    private float mouseSensitivity = 100f;
 
     private float player_x_velocity = 0.1f;
     private float player_z_velocity = 0.1f;
@@ -21,7 +23,10 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        playerBody = GameObject.Find("player_body");
         main_camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void PlayerControls()
@@ -56,11 +61,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        mouse_x += mouse_x_speed * Input.GetAxis("Mouse X");
-        mouse_y -= mouse_y_speed * Input.GetAxis("Mouse Y");
+        mouse_x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        mouse_y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // rotation for camera and player
-        main_camera.transform.eulerAngles = new Vector3(mouse_y, mouse_x, 0.0f);
-        player.transform.Rotate(0, Input.GetAxis("Mouse X") * mouse_x_speed, 0);
+        mouse_x_rotation -= mouse_y;
+        mouse_x_rotation = Mathf.Clamp(mouse_x_rotation, -90, 90);
+
+        player.transform.Rotate(0, mouse_x, 0);
+        main_camera.transform.localRotation = Quaternion.Euler(mouse_x_rotation, 0, 0);
+
     }
 }
