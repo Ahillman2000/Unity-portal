@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     GameObject player;
-    GameObject playerBody;
     
     GameObject main_camera;
 
@@ -23,7 +22,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerBody = GameObject.Find("player_body");
         main_camera = GameObject.FindGameObjectWithTag("MainCamera");
 
         Cursor.lockState = CursorLockMode.Locked;
