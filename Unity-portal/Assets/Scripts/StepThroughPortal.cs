@@ -9,7 +9,7 @@ public class StepThroughPortal : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //print("touching portal");
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") /*|| other.CompareTag("CompanionCube")*/)
         {
             other.transform.position = otherPortal.transform.position + otherPortal.transform.forward * 1;
             other.transform.rotation = otherPortal.transform.rotation;

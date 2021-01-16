@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     GameObject player;
-    
+    GameObject companionCube;
     GameObject main_camera;
 
     private float mouse_x = 0.0f;
@@ -13,16 +13,19 @@ public class PlayerMovement : MonoBehaviour
 
     private float mouse_x_rotation = 0;
 
-    private float mouseSensitivity = 100f;
+    private float mouse_sensitivity = 100f;
 
-    private float player_x_velocity = 0.1f;
-    private float player_z_velocity = 0.1f;
+    public float player_x_velocity;
+    public float player_z_velocity;
+
+    public bool cube_pickup = false;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         main_camera = GameObject.FindGameObjectWithTag("MainCamera");
+        companionCube = GameObject.Find("CompanionCube");
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -59,8 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        mouse_x = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        mouse_y = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        mouse_x = Input.GetAxis("Mouse X") * mouse_sensitivity * Time.deltaTime;
+        mouse_y = Input.GetAxis("Mouse Y") * mouse_sensitivity * Time.deltaTime;
 
         mouse_x_rotation -= mouse_y;
         mouse_x_rotation = Mathf.Clamp(mouse_x_rotation, -90, 90);
@@ -68,5 +71,28 @@ public class PlayerMovement : MonoBehaviour
         player.transform.Rotate(0, mouse_x, 0);
         main_camera.transform.localRotation = Quaternion.Euler(mouse_x_rotation, 0, 0);
 
+        /*if(cube_pickup == true)
+        {
+            companionCube.transform.parent = player.transform;
+        }*/
     }
+
+    /*private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("CompanionCube"))
+        {
+            if (Input.GetKeyDown("e") && !cube_pickup)
+            {
+                // set position to in front of the player
+                other.GetComponent<Rigidbody>().useGravity = false;
+                cube_pickup = true;
+            }
+            else if (Input.GetKeyDown("e") && cube_pickup)
+            {
+                other.transform.parent = null;
+                other.GetComponent<Rigidbody>().useGravity = true;
+                cube_pickup = false;
+            }
+        }
+    }*/
 }

@@ -8,11 +8,6 @@ public class Portals : MonoBehaviour
     public GameObject redPortal;
     public Camera mainCamera;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
     void PortalPlacement()
     {
         if (Input.GetMouseButtonDown(0))
@@ -33,11 +28,16 @@ public class Portals : MonoBehaviour
         int y = Screen.height / 2;
 
         Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
         {
+            print("hit a Portalable surface");
             Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
             portal.transform.position = hit.point;
             portal.transform.rotation = hitObjectRotation;
+        }
+        else 
+        {
+            print("hit a non Portalable surface");
         }
     }
 
