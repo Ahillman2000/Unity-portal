@@ -1,4 +1,5 @@
-﻿Shader "Unlit/portal"
+﻿// shader available from: https://www.youtube.com/watch?v=cuQao3hEKfs
+Shader "Unlit/portal"
 {
 	Properties
 	{
