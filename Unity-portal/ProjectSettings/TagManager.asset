@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Portalable
   - CompanionCube
+  - PortalBlue
+  - PortalRed
   layers:
   - Default
   - TransparentFX
@@ -16,10 +18,10 @@ TagManager:
   - 
   - 
   - portal_back
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - Player
+  - portal_blue
+  - portal_red
   - 
   - 
   - 

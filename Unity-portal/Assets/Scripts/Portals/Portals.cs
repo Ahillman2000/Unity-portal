@@ -6,6 +6,7 @@ public class Portals : MonoBehaviour
 {
     public GameObject bluePortal;
     public GameObject redPortal;
+
     public Camera mainCamera;
 
     void PortalPlacement()
