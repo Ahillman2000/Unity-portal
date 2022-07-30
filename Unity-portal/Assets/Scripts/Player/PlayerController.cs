@@ -50,8 +50,20 @@ public class PlayerController : MonoBehaviour
     private void PlayerMovement()
     {
         transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
-        Vector3 move = Camera.main.transform.right * movement.ReadValue<Vector2>().x + Camera.main.transform.forward * movement.ReadValue<Vector2>().y;
-        characterController.Move(speed * Time.deltaTime * move);
+
+        var forward = Camera.main.transform.forward;
+        var right = Camera.main.transform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 moveDirection = right * movement.ReadValue<Vector2>().x + forward * movement.ReadValue<Vector2>().y;
+
+        //Vector3 move = Camera.main.transform.right * movement.ReadValue<Vector2>().x + Camera.main.transform.forward * movement.ReadValue<Vector2>().y;
+        characterController.Move(speed * Time.deltaTime * moveDirection);
     }
 
     private void Gravity()
