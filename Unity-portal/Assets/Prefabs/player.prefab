@@ -224,6 +224,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1077345356707268728}
+  - component: {fileID: 3007116012356485643}
   - component: {fileID: 9159318477273192308}
   - component: {fileID: 9159318477273192299}
   - component: {fileID: 2762187262231660815}
@@ -253,6 +254,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3007116012356485643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2258087037024957282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 373dcd6cc101c2e44a4dd55fb7ccac43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &9159318477273192308
 CharacterController:
   m_ObjectHideFlags: 0
@@ -308,12 +321,12 @@ MonoBehaviour:
     type: 3}
   portalRedPrefab: {fileID: 4509745008167570277, guid: 940e96c1573d5e146b13260e220bbe71,
     type: 3}
-  portalBlueInstance: {fileID: 0}
-  portalRedInstance: {fileID: 0}
   portalBlueActiveMaterial: {fileID: 2100000, guid: cea9ca80b8cad5b489c3a184ec2637ec,
     type: 2}
   portalRedActiveMaterial: {fileID: 2100000, guid: a5f298ffa4dba394ab9838f4e0d103b2,
     type: 2}
+  portalBlueInstance: {fileID: 0}
+  portalRedInstance: {fileID: 0}
 --- !u!1 &3041039901553422605
 GameObject:
   m_ObjectHideFlags: 0

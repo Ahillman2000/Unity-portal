@@ -1,9 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SpawnPortal : MonoBehaviour
 {
+    private PlayerInputActions playerInputActions;
     Camera mainCamera;
 
     [Header("Portal Prefabs")]
@@ -22,6 +25,14 @@ public class SpawnPortal : MonoBehaviour
     private Material portalBlueCurrentMaterial;
     private Material portalRedCurrentMaterial;
 
+    private void Awake()
+    {
+        playerInputActions = InputManager.Instance.playerInputActions;
+
+        playerInputActions.Player.ShootPortalLeft.performed += ShootPortalLeft;
+        playerInputActions.Player.ShootPortalRight.performed += ShootPortalRight;
+    }
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -29,48 +40,47 @@ public class SpawnPortal : MonoBehaviour
 
     void Update()
     {
-        FirePortal();
         PortalMaterials();
     }
 
-    private void FirePortal()
+    private void ShootPortalLeft(InputAction.CallbackContext context)
     {
-        if (Input.GetMouseButtonDown(0))
+        ShootPortal(0);
+    }
+
+    private void ShootPortalRight(InputAction.CallbackContext context)
+    {
+        ShootPortal(1);
+    }
+
+    private void ShootPortal(int portalID)
+    {
+        int x = Screen.width / 2;
+        int y = Screen.height / 2;
+
+        Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
+
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
         {
-            int x = Screen.width / 2;
-            int y = Screen.height / 2;
+            Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
 
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
-
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
+            if(portalID == 0)
             {
-                Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
-
-                if (portalBlueInstance != null)
-                {
-                    Destroy(portalBlueInstance);
-                }
-
-                portalBlueInstance = Instantiate(portalBluePrefab, hit.point, hitObjectRotation);
-            }
-        }
-        if (Input.GetMouseButtonDown(1))
-        {
-            int x = Screen.width / 2;
-            int y = Screen.height / 2;
-
-            Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
-
-            if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
-            {
-                Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
-
                 if (portalRedInstance != null)
                 {
                     Destroy(portalRedInstance);
                 }
 
                 portalRedInstance = Instantiate(portalRedPrefab, hit.point, hitObjectRotation);
+            }
+            else if (portalID == 1)
+            {
+                if (portalBlueInstance != null)
+                {
+                    Destroy(portalBlueInstance);
+                }
+
+                portalBlueInstance = Instantiate(portalBluePrefab, hit.point, hitObjectRotation);
             }
         }
     }
