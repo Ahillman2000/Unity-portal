@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class PortalCamera : MonoBehaviour
 {
-    SpawnPortalClass portalSpawner;
+    private GameObject Player;
+    private Camera playerCam;
+    private SpawnPortal portalSpawner;
 
-    GameObject Player;
-    Camera playerCam;
+    private Camera portalCam;
+    private GameObject otherPortal;
+    private Transform otherPortalCam;
 
-    GameObject otherPortal;
-    Camera portalCam;
-    Transform otherPortalCam;
+    public float nearClipOffset = 0.05f;
+    public float nearClipLimit = 0.2f;
 
     private void Start()
     {
         Player = GameObject.FindGameObjectWithTag("Player");
         playerCam = Camera.main;
 
-        portalSpawner = Player.GetComponent<SpawnPortalClass>();
+        portalSpawner = Player.GetComponent<SpawnPortal>();
     }
 
     private void LateUpdate()
@@ -38,38 +40,49 @@ public class PortalCamera : MonoBehaviour
             otherPortalCam = otherPortal.transform.GetChild(0);
 
             SetPortalCamPositionAndRotation();
+            SetViewFrustrum();
         }
     }
 
+    /// <summary>
+    /// Sebastian Lague
+    /// </summary>
     private void SetPortalCamPositionAndRotation()
     {
-        
-        //Sebastian Lague implementation
         Matrix4x4 m = otherPortal.transform.localToWorldMatrix 
                       * this.transform.worldToLocalMatrix 
                       * playerCam.transform.localToWorldMatrix;
 
         Quaternion rotation = Quaternion.Euler(0, 180, 0) * m.rotation;
-        //otherPortalCam.rotation = rotation;
 
         Vector3 relativePos = this.transform.InverseTransformPoint(Player.transform.position);
         relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
         Vector3 position = otherPortal.transform.TransformPoint(relativePos);
 
-        //otherPortalCam.SetPositionAndRotation(m.GetColumn (3), rotation);
         otherPortalCam.SetPositionAndRotation(position, rotation);
+    }
 
+    /// <summary>
+    /// Sebastian Lague
+    /// </summary>
+    private void SetViewFrustrum()
+    {
+        Transform clipPlane = transform;
+        int dot = System.Math.Sign(Vector3.Dot(clipPlane.forward, transform.position - portalCam.transform.position));
 
-        ////////////////////////
-        /// Daniel Illet ///////
-        ////////////////////////
-        /*
-        Vector3 relativePos = this.transform.InverseTransformPoint(Player.transform.position);
-        relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
-        otherPortalCam.transform.position = otherPortal.transform.TransformPoint(relativePos);
+        Vector3 camSpacePos = portalCam.worldToCameraMatrix.MultiplyPoint(clipPlane.position);
+        Vector3 camSpaceNormal = portalCam.worldToCameraMatrix.MultiplyVector(clipPlane.forward) * dot;
+        float camSpaceDst = -Vector3.Dot(camSpacePos, camSpaceNormal) + nearClipOffset;
 
-        Quaternion relativeRot = Quaternion.Inverse(this.transform.rotation) * Player.transform.rotation;
-        relativeRot = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeRot;
-        otherPortalCam.transform.rotation = otherPortal.transform.rotation * relativeRot;*/
+        if (Mathf.Abs(camSpaceDst) > nearClipLimit)
+        {
+            Vector4 clipPlaneCameraSpace = new Vector4(camSpaceNormal.x, camSpaceNormal.y, camSpaceNormal.z, camSpaceDst);
+
+            portalCam.projectionMatrix = playerCam.CalculateObliqueMatrix(clipPlaneCameraSpace);
+        }
+        else
+        {
+            portalCam.projectionMatrix = playerCam.projectionMatrix;
+        }
     }
 }

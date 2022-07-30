@@ -1,25 +1,22 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EmancipationGrid : MonoBehaviour
 {
-    GameObject player;
-    SpawnPortalClass spawnPortalScript;
+    private GameObject player;
+    private SpawnPortal spawnPortalScript;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        spawnPortalScript = player.GetComponent<SpawnPortalClass>();
+        spawnPortalScript = player.GetComponent<SpawnPortal>();
     }
 
-    void OnTriggerEnter()
+    private void OnTriggerEnter(Collider other)
     {
-        spawnPortalScript.DestroyPortals();
-    }
-
-    void Update()
-    {
-        
+        if(other.gameObject == player)
+        {
+            Debug.Log("Touched emancipation grid");
+            spawnPortalScript.DestroyPortals();
+        }
     }
 }
