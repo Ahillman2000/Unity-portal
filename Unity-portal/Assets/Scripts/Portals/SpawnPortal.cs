@@ -10,21 +10,22 @@ public class SpawnPortal : MonoBehaviour
     Camera mainCamera;
 
     [Header("Portal Prefabs")]
-    public GameObject portalBluePrefab;
-    public GameObject portalRedPrefab;
+    public GameObject portalLeftPrefab;
+    public GameObject portalRightPrefab;
 
     [Header("Portal Render Target Textures")]
-    public Material portalBlueActiveMaterial;
-    public Material portalRedActiveMaterial;
+    public Material portalLeftActiveMaterial;
+    public Material portalRightActiveMaterial;
 
     // instances of each portal once created
-    [HideInInspector] public GameObject portalBlueInstance;
-    [HideInInspector] public GameObject portalRedInstance;
+    [HideInInspector] public GameObject portalLeftInstance;
+    [HideInInspector] public GameObject portalRightInstance;
 
     // the current material attached to the portals
-    private Material portalBlueCurrentMaterial;
-    private Material portalRedCurrentMaterial;
+    private Material portalLeftCurrentMaterial;
+    private Material portalRightCurrentMaterial;
 
+    [Header("")]
     [SerializeField] private PortalCrosshair crosshairs;
 
     private void Awake()
@@ -72,24 +73,24 @@ public class SpawnPortal : MonoBehaviour
 
             if (portalID == 0)
             {
-                if (portalBlueInstance != null)
+                if (portalLeftInstance != null)
                 {
-                    Destroy(portalBlueInstance);
+                    Destroy(portalLeftInstance);
                 }
 
-                portalBlueInstance = Instantiate(portalBluePrefab, hit.point, hitObjectRotation);
+                portalLeftInstance = Instantiate(portalLeftPrefab, hit.point, hitObjectRotation);
             }
             else if (portalID == 1)
             {
-                if (portalRedInstance != null)
+                if (portalRightInstance != null)
                 {
-                    Destroy(portalRedInstance);
+                    Destroy(portalRightInstance);
                 }
 
-                portalRedInstance = Instantiate(portalRedPrefab, hit.point, hitObjectRotation);
+                portalRightInstance = Instantiate(portalRightPrefab, hit.point, hitObjectRotation);
             }
 
-            crosshairs.SetPortalCrosshairActive(portalID);
+                    crosshairs.SetPortalCrosshairActive(portalID);
         }
     }
 
@@ -98,34 +99,34 @@ public class SpawnPortal : MonoBehaviour
     /// </summary>
     private void PortalMaterials()
     {
-        if (portalBlueInstance != null)
+        if (portalLeftInstance != null)
         {
-            portalBlueCurrentMaterial = portalBlueInstance.GetComponent<Renderer>().material;
+            portalLeftCurrentMaterial = portalLeftInstance.GetComponent<Renderer>().material;
         }
-        if (portalRedInstance != null)
+        if (portalRightInstance != null)
         {
-            portalRedCurrentMaterial = portalRedInstance.GetComponent<Renderer>().material;
+            portalRightCurrentMaterial = portalRightInstance.GetComponent<Renderer>().material;
         }
 
-        // if blue exists and red doesnt
-        if (portalBlueInstance != null && portalRedInstance == null)
+        // if left exists and right doesnt
+        if (portalLeftInstance != null && portalRightInstance == null)
         {
             // blue = black
-            portalBlueCurrentMaterial.color = Color.black;
+            portalLeftCurrentMaterial.color = Color.black;
         }
-        // if red exists and blue doesnt
-        if (portalRedInstance != null && portalBlueInstance == null)
+        // if right exists and left doesnt
+        if (portalRightInstance != null && portalLeftInstance == null)
         {
             // red = black
-            portalRedCurrentMaterial.color = Color.black;
+            portalRightCurrentMaterial.color = Color.black;
         }
         // if both exist
-        if (portalRedInstance != null && portalBlueInstance != null)
+        if (portalRightInstance != null && portalLeftInstance != null)
         {
             // blue = blue
-            portalBlueCurrentMaterial = portalBlueActiveMaterial;
+            portalLeftCurrentMaterial = portalLeftActiveMaterial;
             // red = red
-            portalRedCurrentMaterial = portalRedActiveMaterial;
+            portalRightCurrentMaterial = portalRightActiveMaterial;
         }
     }
 
@@ -136,13 +137,13 @@ public class SpawnPortal : MonoBehaviour
     {
         Debug.Log("Portals Destroyed");
 
-        if(portalBlueInstance != null)
+        if(portalLeftInstance != null)
         {
-            Destroy(portalBlueInstance);
+            Destroy(portalLeftInstance);
         }
-        if(portalRedInstance != null)
+        if(portalRightInstance != null)
         {
-            Destroy(portalRedInstance);
+            Destroy(portalRightInstance);
         }
         crosshairs.DisableCrosshairs();
     }

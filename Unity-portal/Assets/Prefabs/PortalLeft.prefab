@@ -159,7 +159,7 @@ GameObject:
   - component: {fileID: 8695525804016023753}
   - component: {fileID: 3298443926632164905}
   m_Layer: 11
-  m_Name: portal_blue_test
+  m_Name: PortalLeft
   m_TagString: PortalBlue
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

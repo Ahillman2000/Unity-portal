@@ -25,7 +25,7 @@ public class PortalCamera : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (portalSpawner.portalBlueInstance != null && portalSpawner.portalRedInstance != null)
+        if (portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
         {
             if (this.CompareTag("PortalBlue"))
             {

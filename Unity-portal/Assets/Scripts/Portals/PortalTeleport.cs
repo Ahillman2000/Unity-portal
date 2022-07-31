@@ -16,7 +16,7 @@ public class PortalTeleport : MonoBehaviour
     private void OnTriggerEnter(Collider collider)
     {
         Debug.Log("Touched portal");
-        if (collider.gameObject == player && portalSpawner.portalBlueInstance != null && portalSpawner.portalRedInstance != null)
+        if (collider.gameObject == player && portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
         {
             if (this.CompareTag("PortalBlue"))
             {
