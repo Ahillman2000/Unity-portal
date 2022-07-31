@@ -15,7 +15,6 @@ public class EmancipationGrid : MonoBehaviour
     {
         if(other.gameObject == player)
         {
-            Debug.Log("Touched emancipation grid");
             spawnPortalScript.DestroyPortals();
         }
     }

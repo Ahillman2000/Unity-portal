@@ -25,6 +25,8 @@ public class SpawnPortal : MonoBehaviour
     private Material portalBlueCurrentMaterial;
     private Material portalRedCurrentMaterial;
 
+    [SerializeField] private PortalCrosshair crosshairs;
+
     private void Awake()
     {
         playerInputActions = InputManager.Instance.playerInputActions;
@@ -53,6 +55,10 @@ public class SpawnPortal : MonoBehaviour
         ShootPortal(1);
     }
 
+    /// <summary>
+    /// Instantiates the relevant portal object within the scene
+    /// </summary>
+    /// <param name="portalID"> The ID of the portal to be Spawned (0 = left, 1 = right) </param>
     private void ShootPortal(int portalID)
     {
         int x = Screen.width / 2;
@@ -64,16 +70,7 @@ public class SpawnPortal : MonoBehaviour
         {
             Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
 
-            if(portalID == 0)
-            {
-                if (portalRedInstance != null)
-                {
-                    Destroy(portalRedInstance);
-                }
-
-                portalRedInstance = Instantiate(portalRedPrefab, hit.point, hitObjectRotation);
-            }
-            else if (portalID == 1)
+            if (portalID == 0)
             {
                 if (portalBlueInstance != null)
                 {
@@ -82,9 +79,23 @@ public class SpawnPortal : MonoBehaviour
 
                 portalBlueInstance = Instantiate(portalBluePrefab, hit.point, hitObjectRotation);
             }
+            else if (portalID == 1)
+            {
+                if (portalRedInstance != null)
+                {
+                    Destroy(portalRedInstance);
+                }
+
+                portalRedInstance = Instantiate(portalRedPrefab, hit.point, hitObjectRotation);
+            }
+
+            crosshairs.SetPortalCrosshairActive(portalID);
         }
     }
 
+    /// <summary>
+    /// Sets the material of the portals to either black or a render texture based on portals in scene
+    /// </summary>
     private void PortalMaterials()
     {
         if (portalBlueInstance != null)
@@ -118,11 +129,21 @@ public class SpawnPortal : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Destroys both any instances of portals in scene
+    /// </summary>
     public void DestroyPortals()
     {
         Debug.Log("Portals Destroyed");
 
-        Destroy(portalBlueInstance);
-        Destroy(portalRedInstance);
+        if(portalBlueInstance != null)
+        {
+            Destroy(portalBlueInstance);
+        }
+        if(portalRedInstance != null)
+        {
+            Destroy(portalRedInstance);
+        }
+        crosshairs.DisableCrosshairs();
     }
 }

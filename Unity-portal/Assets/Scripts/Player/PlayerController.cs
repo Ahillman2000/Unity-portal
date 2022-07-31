@@ -47,6 +47,9 @@ public class PlayerController : MonoBehaviour
         GroundCheck();
     }
 
+    /// <summary>
+    /// faces player in direction of camera and moves in relation to camera
+    /// </summary>
     private void PlayerMovement()
     {
         transform.rotation = Quaternion.Euler(0, Camera.main.transform.eulerAngles.y, 0);
@@ -62,16 +65,21 @@ public class PlayerController : MonoBehaviour
 
         Vector3 moveDirection = right * movement.ReadValue<Vector2>().x + forward * movement.ReadValue<Vector2>().y;
 
-        //Vector3 move = Camera.main.transform.right * movement.ReadValue<Vector2>().x + Camera.main.transform.forward * movement.ReadValue<Vector2>().y;
         characterController.Move(speed * Time.deltaTime * moveDirection);
     }
 
+    /// <summary>
+    /// Gravitational force applied to the character controller
+    /// </summary>
     private void Gravity()
     {
         velocity.y += GRAVITY * mass * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
     }
 
+    /// <summary>
+    /// Check to determine if character controller is touching ground
+    /// </summary>
     private void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(groundCheckObject.position, groundDistance, groundMask);
