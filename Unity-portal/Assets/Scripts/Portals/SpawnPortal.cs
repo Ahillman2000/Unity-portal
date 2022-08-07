@@ -135,8 +135,6 @@ public class SpawnPortal : MonoBehaviour
     /// </summary>
     public void DestroyPortals()
     {
-        Debug.Log("Portals Destroyed");
-
         if(portalLeftInstance != null)
         {
             Destroy(portalLeftInstance);

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class PortalTeleport : MonoBehaviour
 {
     private GameObject player;
     private SpawnPortal portalSpawner;
+
+    private GameObject otherPortal;
 
     private void Start()
     {
@@ -15,21 +18,21 @@ public class PortalTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("Touched portal");
         if (collider.gameObject == player && portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
         {
             if (this.CompareTag("PortalBlue"))
             {
-                GameObject redPortal = GameObject.FindGameObjectWithTag("PortalRed");
-
-                collider.transform.SetPositionAndRotation(redPortal.transform.position + redPortal.transform.forward * 1, redPortal.transform.rotation);
+                otherPortal = GameObject.FindGameObjectWithTag("PortalRed");
             }
-            else if(this.CompareTag("PortalRed"))
+            else if (this.CompareTag("PortalRed"))
             {
-                GameObject bluePortal = GameObject.FindGameObjectWithTag("PortalBlue");
-
-                collider.transform.SetPositionAndRotation(bluePortal.transform.position + bluePortal.transform.forward * 1, bluePortal.transform.rotation);
+                otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
             }
+
+            Quaternion relativeRotation = Quaternion.Inverse(this.transform.rotation) * collider.transform.rotation;
+            relativeRotation *= Quaternion.Euler(0.0f, 180.0f, 0.0f);
+
+            collider.transform.SetPositionAndRotation(otherPortal.transform.position + otherPortal.transform.forward * 1, otherPortal.transform.rotation * relativeRotation);
         }
     }
 }

@@ -257,6 +257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb74bdef1ad3c249a6563ca1cd9450a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherPortal: {fileID: 4509745008167570277, guid: 940e96c1573d5e146b13260e220bbe71,
+    type: 3}
 --- !u!114 &3298443926632164905
 MonoBehaviour:
   m_ObjectHideFlags: 0

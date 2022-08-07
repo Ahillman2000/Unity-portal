@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.2}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1582187136187085381}
   m_RootOrder: 1
@@ -45,6 +46,7 @@ VisualEffect:
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
   m_ResetSeedOnPlay: 1
+  m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
       m_Array: []
@@ -66,9 +68,9 @@ VisualEffect:
       m_Array:
       - m_Value:
           serializedVersion: 2
-          key0: {r: 1.0592737, g: 0.79861474, b: 0, a: 0}
-          key1: {r: 0.8, g: 0, b: 0.019607844, a: 1}
-          key2: {r: 0.96574056, g: 1, b: 0, a: 0.52288026}
+          key0: {r: 1.1350579, g: 0.60148215, b: 0, a: 0}
+          key1: {r: 0.6038274, g: 0, b: 0.001517635, a: 1}
+          key2: {r: 0.92382777, g: 1, b: 0, a: 0.52288026}
           key3: {r: 0.89825565, g: 0.57972527, b: 1.216786, a: 0.031827837}
           key4: {r: 0, g: 0, b: 0, a: 0}
           key5: {r: 0, g: 0, b: 0, a: 0}
@@ -101,6 +103,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &971930338009192934
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -110,6 +113,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -117,8 +121,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -167,6 +169,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6666667, y: 0.33333334, z: 20}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1582187136187085381}
   m_RootOrder: 0
@@ -236,12 +239,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 0
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
+  m_AllowXRRendering: 1
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -276,6 +281,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 3, z: 0.05}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7854142448188791424}
   - {fileID: 1862196302067502570}
@@ -301,6 +307,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -356,6 +363,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb74bdef1ad3c249a6563ca1cd9450a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherPortal: {fileID: 4348589186578015779, guid: a48baec249fb750479c76cec6a33e510,
+    type: 3}
 --- !u!114 &6676307953451038209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,3 +377,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 595279e869fc7bb4a8cf04f332c6344c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nearClipOffset: 0.05
+  nearClipLimit: 0.2

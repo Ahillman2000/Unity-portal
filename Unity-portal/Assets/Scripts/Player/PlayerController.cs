@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     private PlayerInputActions playerInputActions;
     private InputAction movement;
+    private InputAction look;
 
     [Header("Movement")]
     [SerializeField] private float speed = 10f;
@@ -26,11 +27,15 @@ public class PlayerController : MonoBehaviour
     readonly float GRAVITY = -9.8f;
     private Vector3 velocity;
 
+    [SerializeField] private float mouseSensitivity = 100f;
+    private float mouse_x_rotation = 0;
+
     private void Awake()
     {
         playerInputActions = InputManager.Instance.playerInputActions;
 
         movement = playerInputActions.Player.Movement;
+        look = playerInputActions.Player.Look;
         playerInputActions.Player.Jump.performed += DoJump;
     }
 
@@ -42,6 +47,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        CameraRotation();
 
         Gravity();
         GroundCheck();
@@ -66,6 +72,21 @@ public class PlayerController : MonoBehaviour
         Vector3 moveDirection = right * movement.ReadValue<Vector2>().x + forward * movement.ReadValue<Vector2>().y;
 
         characterController.Move(speed * Time.deltaTime * moveDirection);
+    }
+
+    /// <summary>
+    /// Rotates the player horizontally and the camera vertically
+    /// </summary>
+    private void CameraRotation()
+    {
+        float mouse_x = look.ReadValue<Vector2>().x * mouseSensitivity * Time.deltaTime;
+        float mouse_y = look.ReadValue<Vector2>().y * mouseSensitivity * Time.deltaTime;
+
+        mouse_x_rotation -= mouse_y;
+        mouse_x_rotation = Mathf.Clamp(mouse_x_rotation, -90, 90);
+
+        this.gameObject.transform.Rotate(0, mouse_x, 0);
+        Camera.main.transform.localRotation = Quaternion.Euler(mouse_x_rotation, 0, 0);
     }
 
     /// <summary>
