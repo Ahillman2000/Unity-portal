@@ -29,10 +29,17 @@ public class PortalTeleport : MonoBehaviour
                 otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
             }
 
+            // Update relative rotation
             Quaternion relativeRotation = Quaternion.Inverse(this.transform.rotation) * collider.transform.rotation;
             relativeRotation *= Quaternion.Euler(0.0f, 180.0f, 0.0f);
 
             collider.transform.SetPositionAndRotation(otherPortal.transform.position + otherPortal.transform.forward * 1, otherPortal.transform.rotation * relativeRotation);
+
+            // Update velocity of rigidbody.
+            Rigidbody rb = collider.GetComponent<Rigidbody>();
+            Vector3 relativeVel = this.transform.InverseTransformDirection(rb.velocity);
+            relativeVel = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeVel;
+            rb.velocity = otherPortal.transform.TransformDirection(relativeVel);
         }
     }
 }
