@@ -19,7 +19,7 @@ public class PortalTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject == player && portalSpawner.BothPortalsSpawned())
+        if (collider.GetComponent<Rigidbody>() != null && portalSpawner.BothPortalsSpawned())
         {
             Teleport(collider);
         }
@@ -51,5 +51,14 @@ public class PortalTeleport : MonoBehaviour
         Vector3 relativeVel = this.transform.InverseTransformDirection(rb.velocity);
         relativeVel = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeVel;
         rb.velocity = otherPortal.transform.TransformDirection(relativeVel);
+
+        StartCoroutine(DisableCollision(teleportObject));
+    }
+
+    private IEnumerator DisableCollision(Collider target)
+    {
+        target.enabled = false;
+        yield return new WaitForSeconds(0.50f);
+        target.enabled = true;
     }
 }
