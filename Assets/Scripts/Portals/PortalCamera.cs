@@ -12,8 +12,8 @@ public class PortalCamera : MonoBehaviour
     private GameObject otherPortal;
     private Transform otherPortalCam;
 
-    public float nearClipOffset = 0.05f;
-    public float nearClipLimit = 0.2f;
+    [SerializeField] private float nearClipOffset = 0.05f;
+    [SerializeField] private float nearClipLimit = 0.2f;
 
     private void Start()
     {
@@ -24,6 +24,14 @@ public class PortalCamera : MonoBehaviour
     }
 
     private void LateUpdate()
+    {
+        UpdatePortalCameras();
+    }
+
+    /// <summary>
+    /// Handles the relative position, rotation and clipping planes of the portal cameras
+    /// </summary>
+    private void UpdatePortalCameras()
     {
         if (portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
         {
@@ -45,8 +53,9 @@ public class PortalCamera : MonoBehaviour
     }
 
     /// <summary>
-    /// Sebastian Lague
+    /// Sets the opposite portal's camera position and rotation relative to the players from this portal.
     /// </summary>
+    /// Sebastian Lague: https://www.youtube.com/watch?v=cWpFZbjtSQg
     private void SetPortalCamPositionAndRotation()
     {
         Matrix4x4 m = otherPortal.transform.localToWorldMatrix 
@@ -55,7 +64,7 @@ public class PortalCamera : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0, 180, 0) * m.rotation;
 
-        Vector3 relativePos = this.transform.InverseTransformPoint(Player.transform.position);
+        Vector3 relativePos = this.transform.InverseTransformPoint(playerCam.transform.position);
         relativePos = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativePos;
         Vector3 position = otherPortal.transform.TransformPoint(relativePos);
 
@@ -63,8 +72,9 @@ public class PortalCamera : MonoBehaviour
     }
 
     /// <summary>
-    /// Sebastian Lague
+    /// Sets the view frustrum of the portal's camera to prevent redering objects behind the portal
     /// </summary>
+    /// Sebastian Lague: https://www.youtube.com/watch?v=cWpFZbjtSQg
     private void SetViewFrustrum()
     {
         Transform clipPlane = transform;

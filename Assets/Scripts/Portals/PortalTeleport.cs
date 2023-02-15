@@ -8,6 +8,7 @@ public class PortalTeleport : MonoBehaviour
     private GameObject player;
     private SpawnPortal portalSpawner;
 
+    // The opposite portal to this object
     private GameObject otherPortal;
 
     private void Start()

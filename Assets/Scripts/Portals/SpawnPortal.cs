@@ -6,27 +6,29 @@ using UnityEngine.InputSystem;
 
 public class SpawnPortal : MonoBehaviour
 {
-    private PlayerInputActions playerInputActions;
-    Camera mainCamera;
-
-    [Header("Portal Prefabs")]
-    public GameObject portalLeftPrefab;
-    public GameObject portalRightPrefab;
-
-    [Header("Portal Render Target Textures")]
-    public Material portalLeftActiveMaterial;
-    public Material portalRightActiveMaterial;
-
-    // instances of each portal once created
+    // Instances of each portal once created
     [HideInInspector] public GameObject portalLeftInstance;
     [HideInInspector] public GameObject portalRightInstance;
+
+    [Header("Portal Prefabs")]
+    [SerializeField] private GameObject portalLeftPrefab;
+    [SerializeField] private GameObject portalRightPrefab;
+
+    [Header("Portal Render Target Textures")]
+    [SerializeField] private Material portalLeftActiveMaterial;
+    [SerializeField] private Material portalRightActiveMaterial;
+
+    [Header("Crosshair")]
+    [SerializeField] private PortalCrosshair crosshairs;
 
     // the current material attached to the portals
     private Material portalLeftCurrentMaterial;
     private Material portalRightCurrentMaterial;
 
-    [Header("")]
-    [SerializeField] private PortalCrosshair crosshairs;
+    private int screenCenterX = Screen.width / 2;
+    private int screenCenterY = Screen.height / 2;
+
+    private PlayerInputActions playerInputActions;
 
     private void Awake()
     {
@@ -38,8 +40,9 @@ public class SpawnPortal : MonoBehaviour
 
     void Start()
     {
-        mainCamera = Camera.main;
-    }
+        screenCenterX = Screen.width / 2;
+        screenCenterY = Screen.height / 2;
+}
 
     void Update()
     {
@@ -62,10 +65,7 @@ public class SpawnPortal : MonoBehaviour
     /// <param name="portalID"> The ID of the portal to be Spawned (0 = left, 1 = right) </param>
     private void ShootPortal(int portalID)
     {
-        int x = Screen.width / 2;
-        int y = Screen.height / 2;
-
-        Ray ray = mainCamera.ScreenPointToRay(new Vector3(x, y));
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenCenterX, screenCenterY));
 
         if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
         {
@@ -89,8 +89,7 @@ public class SpawnPortal : MonoBehaviour
 
                 portalRightInstance = Instantiate(portalRightPrefab, hit.point, hitObjectRotation);
             }
-
-                    crosshairs.SetPortalCrosshairActive(portalID);
+            crosshairs.SetPortalCrosshairActive(portalID);
         }
     }
 
