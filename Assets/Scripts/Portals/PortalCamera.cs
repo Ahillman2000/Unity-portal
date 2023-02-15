@@ -33,7 +33,7 @@ public class PortalCamera : MonoBehaviour
     /// </summary>
     private void UpdatePortalCameras()
     {
-        if (portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
+        if (portalSpawner.BothPortalsSpawned())
         {
             if (this.CompareTag("PortalBlue"))
             {

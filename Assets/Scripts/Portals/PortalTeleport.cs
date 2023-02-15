@@ -19,28 +19,37 @@ public class PortalTeleport : MonoBehaviour
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject == player && portalSpawner.portalLeftInstance != null && portalSpawner.portalRightInstance != null)
+        if (collider.gameObject == player && portalSpawner.BothPortalsSpawned())
         {
-            if (this.CompareTag("PortalBlue"))
-            {
-                otherPortal = GameObject.FindGameObjectWithTag("PortalRed");
-            }
-            else if (this.CompareTag("PortalRed"))
-            {
-                otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
-            }
-
-            // Update relative rotation
-            Quaternion relativeRotation = Quaternion.Inverse(this.transform.rotation) * collider.transform.rotation;
-            relativeRotation *= Quaternion.Euler(0.0f, 180.0f, 0.0f);
-
-            collider.transform.SetPositionAndRotation(otherPortal.transform.position + otherPortal.transform.forward * 1, otherPortal.transform.rotation * relativeRotation);
-
-            // Update velocity of rigidbody.
-            Rigidbody rb = collider.GetComponent<Rigidbody>();
-            Vector3 relativeVel = this.transform.InverseTransformDirection(rb.velocity);
-            relativeVel = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeVel;
-            rb.velocity = otherPortal.transform.TransformDirection(relativeVel);
+            Teleport(collider);
         }
+    }
+
+    /// <summary>
+    /// Teleports the colliding object to the opposite portal
+    /// </summary>
+    /// <param name="teleportObject"> The object colliding with the trigger volume </param>
+    private void Teleport(Collider teleportObject)
+    {
+        if (this.CompareTag("PortalBlue"))
+        {
+            otherPortal = GameObject.FindGameObjectWithTag("PortalRed");
+        }
+        else if (this.CompareTag("PortalRed"))
+        {
+            otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
+        }
+
+        // Update relative rotation
+        Quaternion relativeRotation = Quaternion.Inverse(this.transform.rotation) * teleportObject.transform.rotation;
+        relativeRotation *= Quaternion.Euler(0.0f, 180.0f, 0.0f);
+
+        teleportObject.transform.SetPositionAndRotation(otherPortal.transform.position + otherPortal.transform.forward * 1, otherPortal.transform.rotation * relativeRotation);
+
+        // Update velocity of rigidbody.
+        Rigidbody rb = teleportObject.GetComponent<Rigidbody>();
+        Vector3 relativeVel = this.transform.InverseTransformDirection(rb.velocity);
+        relativeVel = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeVel;
+        rb.velocity = otherPortal.transform.TransformDirection(relativeVel);
     }
 }

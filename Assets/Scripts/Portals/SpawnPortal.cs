@@ -98,6 +98,35 @@ public class SpawnPortal : MonoBehaviour
     /// </summary>
     private void PortalMaterials()
     {
+        SetMaterialReferences();
+
+        // if left exists and right doesnt
+        if (portalLeftInstance != null && portalRightInstance == null)
+        {
+            // left portal's material set to black
+            portalLeftCurrentMaterial.color = Color.black;
+        }
+        // if right exists and left doesnt
+        if (portalRightInstance != null && portalLeftInstance == null)
+        {
+            // right portal's material set to black
+            portalRightCurrentMaterial.color = Color.black;
+        }
+        // if both exist
+        if (BothPortalsSpawned())
+        {
+            // left portal's material set to active material
+            portalLeftCurrentMaterial = portalLeftActiveMaterial;
+            // right portal's material set to active material
+            portalRightCurrentMaterial = portalRightActiveMaterial;
+        }
+    }
+
+    /// <summary>
+    /// Gets material references when portals are active
+    /// </summary>
+    private void SetMaterialReferences()
+    {
         if (portalLeftInstance != null)
         {
             portalLeftCurrentMaterial = portalLeftInstance.GetComponent<Renderer>().material;
@@ -106,31 +135,10 @@ public class SpawnPortal : MonoBehaviour
         {
             portalRightCurrentMaterial = portalRightInstance.GetComponent<Renderer>().material;
         }
-
-        // if left exists and right doesnt
-        if (portalLeftInstance != null && portalRightInstance == null)
-        {
-            // blue = black
-            portalLeftCurrentMaterial.color = Color.black;
-        }
-        // if right exists and left doesnt
-        if (portalRightInstance != null && portalLeftInstance == null)
-        {
-            // red = black
-            portalRightCurrentMaterial.color = Color.black;
-        }
-        // if both exist
-        if (portalRightInstance != null && portalLeftInstance != null)
-        {
-            // blue = blue
-            portalLeftCurrentMaterial = portalLeftActiveMaterial;
-            // red = red
-            portalRightCurrentMaterial = portalRightActiveMaterial;
-        }
     }
 
     /// <summary>
-    /// Destroys both any instances of portals in scene
+    /// Destroys any instances of portals in scene
     /// </summary>
     public void DestroyPortals()
     {
@@ -143,5 +151,14 @@ public class SpawnPortal : MonoBehaviour
             Destroy(portalRightInstance);
         }
         crosshairs.DisableCrosshairs();
+    }
+
+    /// <summary>
+    /// Are both portals active?
+    /// </summary>
+    /// <returns> Whether both portal instances exist </returns>
+    public bool BothPortalsSpawned()
+    {
+        return portalLeftInstance != null && portalRightInstance != null;
     }
 }
