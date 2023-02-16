@@ -52,13 +52,26 @@ public class PortalTeleport : MonoBehaviour
         relativeVel = Quaternion.Euler(0.0f, 180.0f, 0.0f) * relativeVel;
         rb.velocity = otherPortal.transform.TransformDirection(relativeVel);
 
-        StartCoroutine(DisableCollision(teleportObject));
+        StartCoroutine(DisableCollision(teleportObject, 0.25f));
+
+        // set rotation to face correct direction
+        Vector3 currentRotation = rb.transform.eulerAngles;
+        currentRotation.x = 0;
+        currentRotation.z = 0;
+
+        rb.transform.eulerAngles = currentRotation;
+        //rb.transform.eulerAngles = Vector3.Lerp(rb.transform.eulerAngles, currentRotation, 1.0f);
     }
 
-    private IEnumerator DisableCollision(Collider target)
+    /// <summary>
+    /// Temporarily disables the targets collider
+    /// </summary>
+    /// <param name="target"> The collider to be temporarily disabled </param>
+    /// <param name="disableTime"> The time in seconds for the collider to be disbled </param>
+    private IEnumerator DisableCollision(Collider target, float disableTime)
     {
         target.enabled = false;
-        yield return new WaitForSeconds(0.50f);
+        yield return new WaitForSeconds(disableTime);
         target.enabled = true;
     }
 }
