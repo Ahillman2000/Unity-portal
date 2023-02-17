@@ -83,4 +83,9 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = airDrag;
         }
     }
+
+    private void OnDisable()
+    {
+        playerInputActions.Player.Jump.performed -= DoJump;
+    }
 }

@@ -71,6 +71,15 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pickup/Drop"",
+                    ""type"": ""Button"",
+                    ""id"": ""2a0ee0bf-60e5-4e7c-a6e3-303fcbb40616"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,28 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                     ""action"": ""ShootPortalRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e18aef29-f1e7-4dcf-9bd3-14a6bd9c0616"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup/Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca61dbe0-1552-4bfb-9beb-e20ab827b6ae"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pickup/Drop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,6 +271,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_ShootPortalLeft = m_Player.FindAction("ShootPortalLeft", throwIfNotFound: true);
         m_Player_ShootPortalRight = m_Player.FindAction("ShootPortalRight", throwIfNotFound: true);
+        m_Player_PickupDrop = m_Player.FindAction("Pickup/Drop", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -304,6 +336,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_ShootPortalLeft;
     private readonly InputAction m_Player_ShootPortalRight;
+    private readonly InputAction m_Player_PickupDrop;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -313,6 +346,7 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @ShootPortalLeft => m_Wrapper.m_Player_ShootPortalLeft;
         public InputAction @ShootPortalRight => m_Wrapper.m_Player_ShootPortalRight;
+        public InputAction @PickupDrop => m_Wrapper.m_Player_PickupDrop;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -337,6 +371,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ShootPortalRight.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootPortalRight;
                 @ShootPortalRight.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootPortalRight;
                 @ShootPortalRight.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnShootPortalRight;
+                @PickupDrop.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupDrop;
+                @PickupDrop.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupDrop;
+                @PickupDrop.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPickupDrop;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -356,6 +393,9 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
                 @ShootPortalRight.started += instance.OnShootPortalRight;
                 @ShootPortalRight.performed += instance.OnShootPortalRight;
                 @ShootPortalRight.canceled += instance.OnShootPortalRight;
+                @PickupDrop.started += instance.OnPickupDrop;
+                @PickupDrop.performed += instance.OnPickupDrop;
+                @PickupDrop.canceled += instance.OnPickupDrop;
             }
         }
     }
@@ -367,5 +407,6 @@ public partial class @PlayerInputActions : IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShootPortalLeft(InputAction.CallbackContext context);
         void OnShootPortalRight(InputAction.CallbackContext context);
+        void OnPickupDrop(InputAction.CallbackContext context);
     }
 }

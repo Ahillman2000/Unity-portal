@@ -30,19 +30,16 @@ public class SpawnPortal : MonoBehaviour
 
     private PlayerInputActions playerInputActions;
 
-    private void Awake()
+    private void Start()
     {
         playerInputActions = InputManager.Instance.playerInputActions;
 
-        playerInputActions.Player.ShootPortalLeft.performed += ShootPortalLeft;
+        playerInputActions.Player.ShootPortalLeft.performed  += ShootPortalLeft;
         playerInputActions.Player.ShootPortalRight.performed += ShootPortalRight;
-    }
 
-    void Start()
-    {
         screenCenterX = Screen.width / 2;
         screenCenterY = Screen.height / 2;
-}
+    }
 
     void Update()
     {
@@ -160,5 +157,11 @@ public class SpawnPortal : MonoBehaviour
     public bool BothPortalsSpawned()
     {
         return portalLeftInstance != null && portalRightInstance != null;
+    }
+
+    private void OnDisable()
+    {
+        playerInputActions.Player.ShootPortalLeft.performed  -= ShootPortalLeft;
+        playerInputActions.Player.ShootPortalRight.performed -= ShootPortalRight;
     }
 }
