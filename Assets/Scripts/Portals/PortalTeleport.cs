@@ -31,13 +31,13 @@ public class PortalTeleport : MonoBehaviour
     /// <param name="teleportObject"> The object colliding with the trigger volume </param>
     private void Teleport(Collider teleportObject)
     {
-        if (this.CompareTag("PortalBlue"))
+        if (this.CompareTag("PortalLeft"))
         {
-            otherPortal = GameObject.FindGameObjectWithTag("PortalRed");
+            otherPortal = GameObject.FindGameObjectWithTag("PortalRight");
         }
-        else if (this.CompareTag("PortalRed"))
+        else if (this.CompareTag("PortalRight"))
         {
-            otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
+            otherPortal = GameObject.FindGameObjectWithTag("PortalLeft");
         }
 
         // Update relative rotation

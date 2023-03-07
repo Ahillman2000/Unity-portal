@@ -35,13 +35,13 @@ public class PortalCamera : MonoBehaviour
     {
         if (portalSpawner.BothPortalsSpawned())
         {
-            if (this.CompareTag("PortalBlue"))
+            if (this.CompareTag("PortalLeft"))
             {
-                otherPortal = GameObject.FindGameObjectWithTag("PortalRed");
+                otherPortal = GameObject.FindGameObjectWithTag("PortalRight");
             }
-            else if (this.CompareTag("PortalRed"))
+            else if (this.CompareTag("PortalRight"))
             {
-                otherPortal = GameObject.FindGameObjectWithTag("PortalBlue");
+                otherPortal = GameObject.FindGameObjectWithTag("PortalLeft");
             }
 
             portalCam = this.GetComponentInChildren<Camera>();

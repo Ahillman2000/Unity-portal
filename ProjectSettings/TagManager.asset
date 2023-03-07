@@ -4,10 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Portalable
-  - CompanionCube
-  - PortalBlue
-  - PortalRed
+  - PortalLeft
+  - PortalRight
   layers:
   - Default
   - TransparentFX
@@ -16,13 +14,13 @@ TagManager:
   - Water
   - UI
   - 
+  - PlayerBody
   - 
-  - portal_back
-  - Ground
-  - Player
-  - portal_blue
-  - portal_red
+  - LeftPortal
+  - RightPortal
+  - Portalable
   - Pickup
+  - 
   - 
   - 
   - 

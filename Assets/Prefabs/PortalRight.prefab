@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1862196302067502570}
   - component: {fileID: 517357635046040332}
   - component: {fileID: 971930338009192934}
-  m_Layer: 12
-  m_Name: portal_red_test_effect
+  m_Layer: 10
+  m_Name: PortalRightEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 7854142448188791424}
   - component: {fileID: 2546024949033450489}
   - component: {fileID: 5924982360657627613}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 12087
+    m_Bits: 7095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 21b7528073e49e441a77f3d0817d9892, type: 2}
   m_TargetDisplay: 0
@@ -264,9 +264,9 @@ GameObject:
   - component: {fileID: 984010940591992512}
   - component: {fileID: 5677258806413290009}
   - component: {fileID: 6676307953451038209}
-  m_Layer: 12
+  m_Layer: 10
   m_Name: PortalRight
-  m_TagString: PortalRed
+  m_TagString: PortalRight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -10,6 +10,8 @@ public class SpawnPortal : MonoBehaviour
     [HideInInspector] public GameObject portalLeftInstance;
     [HideInInspector] public GameObject portalRightInstance;
 
+    [SerializeField] private string portalableLayerName;
+
     [Header("Portal Prefabs")]
     [SerializeField] private GameObject portalLeftPrefab;
     [SerializeField] private GameObject portalRightPrefab;
@@ -63,9 +65,10 @@ public class SpawnPortal : MonoBehaviour
     private void ShootPortal(int portalID)
     {
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(screenCenterX, screenCenterY));
-
-        if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.CompareTag("Portalable"))
+        if (Physics.Raycast(ray, out RaycastHit hit) && hit.transform.gameObject.layer == LayerMask.NameToLayer(portalableLayerName))
         {
+            //Debug.Log("hit portalable surface");
+
             Quaternion hitObjectRotation = Quaternion.LookRotation(hit.normal);
 
             if (portalID == 0)

@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1309479733398976498}
   - component: {fileID: 8360826467819939542}
   - component: {fileID: 607931427914352305}
-  m_Layer: 11
-  m_Name: portal_blue_test_effect
+  m_Layer: 9
+  m_Name: PortalLeftEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -158,9 +158,9 @@ GameObject:
   - component: {fileID: 372673045714571185}
   - component: {fileID: 8695525804016023753}
   - component: {fileID: 3298443926632164905}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: PortalLeft
-  m_TagString: PortalBlue
+  m_TagString: PortalLeft
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -282,7 +282,7 @@ GameObject:
   - component: {fileID: 7102887683283515041}
   - component: {fileID: 564543710995856442}
   - component: {fileID: 4370556822361197188}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 14135
+    m_Bits: 7607
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: 518afb4934c63174fa3fc2f858ed7da2, type: 2}
   m_TargetDisplay: 0
